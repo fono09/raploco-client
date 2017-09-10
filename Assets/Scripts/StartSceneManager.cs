@@ -29,7 +29,7 @@ public class StartSceneManager : SingletonMonoBehaviour<StartSceneManager> {
         }
 
         if (initialized && (Input.touchCount > 0 || Input.GetMouseButtonDown(0))) {
-            SceneManager.LoadScene ("Main");
+            SceneManager.LoadScene ("Menu");
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainController : MonoBehaviour {
 
@@ -54,7 +55,11 @@ public class MainController : MonoBehaviour {
 		datetimeStrS = System.DateTime.Now.Second;
 		datetimeStr = System.DateTime.Now.ToString();
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
-	}
+	
+        if (Screen.orientation == ScreenOrientation.Portrait) {
+                SceneManager.LoadScene ("Menu");
+        }
+    }
 
 	public Vector3 GetPositionOnSphere(float angle1, float angle2, float r)
 	{

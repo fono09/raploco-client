@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
     [SerializeField]
@@ -39,6 +40,12 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
                 updateGenres();
             }
         ));
+    }
+
+    public void Update() {
+        if (Screen.orientation == ScreenOrientation.Landscape) {
+            transitScene ();
+        }
     }
 
     private void showTaskPanel() {
@@ -134,5 +141,9 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
             options.Add (g.name);
         }
         dropdown.AddOptions(options);
+    }
+
+    public void transitScene() {
+        SceneManager.LoadScene ("Main");   
     }
 }
