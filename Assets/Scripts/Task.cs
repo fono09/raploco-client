@@ -12,4 +12,11 @@ public class Task {
             return Convert.ToDateTime (deadline);
         }
     }
+
+    public Task (int id, string name, int cost, string deadline) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.deadline = deadline;
+    }
 }
