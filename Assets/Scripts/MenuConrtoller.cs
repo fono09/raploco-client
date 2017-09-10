@@ -21,33 +21,36 @@ public class MenuConrtoller : MonoBehaviour {
 	List<GameObject> fishList;
 
 
-
 	// Use this for initialization
 	void Start () {
-		for (int i = 1; i <= 10; i++) {
-			int dd = i + 10;
-			tasks.Add( new Task(i, ((char)((int)'A' + i)).ToString(), i*10, String.Format("2017-09-{0:D2} 20:34:16 +0900", dd)));
-		}
-
 		now_time = System.DateTime.Now;
-		
-		int s = 0;
-		foreach(Task n in tasks)
-		{	
-			s += 1;
-
-			TimeSpan kk = n.DeadlineTime - now_time;
-			Debug.Log(kk.TotalSeconds);
-			
-
-			GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
-			GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
-			Debug.Log(new_fish_text);
-			new_fish_text.GetComponent<TextMesh>().text = n.name;
-			//fishList.Add(new_fish);
-		}
-
+        StartCoroutine (applyTaskDatas ());
 	}
+
+
+    public IEnumerator applyTaskDatas() {
+        yield return HTTPManager.instance.GetTasks ((result) => {
+            Debug.Log(result);
+            tasks = new List<Task>(JsonUtility.FromJson<HTTPManager.TaskListPacket>(result).tasks);
+        });
+
+       
+        int s = 0;
+        foreach(Task n in tasks)
+        {   
+            s += 1;
+
+            TimeSpan kk = n.DeadlineTime - now_time;
+            Debug.Log(kk.TotalSeconds);
+
+            GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+            GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
+            Debug.Log(new_fish_text);
+            new_fish_text.GetComponent<TextMesh>().text = n.name;
+            //fishList.Add(new_fish);
+        }
+    }
+
 	
 	// Update is called once per frame
 	void Update () {
