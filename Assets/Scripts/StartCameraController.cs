@@ -23,7 +23,7 @@ public class StartCameraController : MonoBehaviour {
         }
         if(Input.touchCount > 0)
         {　  
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            SceneManager.LoadScene(2, LoadSceneMode.Single);
         }
     }
     //ジャイロセンサの値を表示するプログラム

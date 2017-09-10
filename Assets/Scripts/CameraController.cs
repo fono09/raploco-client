@@ -5,6 +5,10 @@ public class CameraController : MonoBehaviour {
     private GUIStyle labelStyle;
     Quaternion start_gyro;
     Quaternion gyro;
+
+    GameObject last_object;
+
+    int ShowTimeCount;
     void Start()
     {
         //this.labelStyle = new GUIStyle();
@@ -17,12 +21,37 @@ public class CameraController : MonoBehaviour {
 
 
     void Update () {
+        Ray ray = new Ray(this.transform.position, this.transform.forward);
+        RaycastHit hit;
+        GameObject tn = GameObject.Find("TaskName");
+        if (tn != null){
+            tn.SetActive(false);
+        }
+		if (Physics.Raycast(ray,out hit, Mathf.Infinity)){
+            if (hit.transform.name == "3DFishPoint(Clone)"){
+                hit.transform.Find("TaskName").gameObject.SetActive(true);
+                if(last_object ==  hit.transform.gameObject){
+                    ShowTimeCount +=1;
+                }else{
+                    ShowTimeCount = 0;
+                }
+
+                if(ShowTimeCount > 200){
+                    
+                }
+
+                last_object = hit.transform.gameObject;
+            }
+        }
+
+
+
         Input.gyro.enabled = true;
         if (Input.gyro.enabled)
         {
             gyro = Input.gyro.attitude;
             gyro = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x,-gyro.y +start_gyro.y, gyro.z - start_gyro.z, gyro.w));
-            //this.transform.localRotation = gyro;
+            this.transform.localRotation = gyro;
             //最初に見ていた向きとゲームの進行方向を合わせる
             //this.transform.localRotation = Quaternion.Euler(0, -start_gyro.y, 0);
         }
