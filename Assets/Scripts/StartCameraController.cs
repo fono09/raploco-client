@@ -21,10 +21,6 @@ public class StartCameraController : MonoBehaviour {
             ini_gyro = Input.gyro.attitude;
             this.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-ini_gyro.x,-ini_gyro.y, ini_gyro.z, ini_gyro.w)); 
         }
-        if(Input.touchCount > 0)
-        {　  
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
-        }
     }
     //ジャイロセンサの値を表示するプログラム
     void OnGUI()
