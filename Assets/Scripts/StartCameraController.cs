@@ -4,13 +4,13 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class StartCameraController : MonoBehaviour {
-    private GUIStyle labelStyle;
+    //private GUIStyle labelStyle;
     public static Quaternion ini_gyro;
     void Start()
     {
-        this.labelStyle = new GUIStyle();
-        this.labelStyle.fontSize = Screen.height / 22;
-        this.labelStyle.normal.textColor = Color.white;
+        //this.labelStyle = new GUIStyle();
+        //this.labelStyle.fontSize = Screen.height / 22;
+        //this.labelStyle.normal.textColor = Color.white;
 
     }
 
@@ -20,6 +20,10 @@ public class StartCameraController : MonoBehaviour {
         {
             ini_gyro = Input.gyro.attitude;
             this.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-ini_gyro.x,-ini_gyro.y, ini_gyro.z, ini_gyro.w)); 
+        }
+        if(Input.touchCount > 0)
+        {　  
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
     }
     //ジャイロセンサの値を表示するプログラム
@@ -52,14 +56,11 @@ public class StartCameraController : MonoBehaviour {
                 default:
                     throw new System.InvalidOperationException();
                 }
-                GUI.Label(new Rect(x, y, w, h), text, this.labelStyle);
+                //GUI.Label(new Rect(x, y, w, h), text, this.labelStyle);
             }
 
         }
-        //スタートからシーン遷移を行う
-        if (GUI.Button(new Rect(Screen.width / 2 - Screen.width / 10, Screen.height / 2, Screen.width / 5, Screen.height / 10), "Start")) {
-            SceneManager.LoadScene("Main", LoadSceneMode.Single);
-        }
+
     }
 }
 
