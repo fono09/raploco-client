@@ -14,9 +14,9 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
 
     private static readonly string baseUrl = "https://raploco-server.herokuapp.com/";
     private static readonly string testUrl = "ok";
-    private static readonly string userUrl = "users";
+    public static readonly string userUrl = "users";
     public static readonly string taskUrl = "tasks";
-    private static readonly string favoriteUrl = "users/favorites";
+    public static readonly string favoriteUrl = "users/favorites";
     public static readonly string genreUrl = "genres";
 
     private string uuid;
@@ -74,12 +74,18 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
     }
 
     [Serializable]
-    private class PostFavoritePacket
+    public class PostFavoritePacket
     {
         public int id; 
         public PostFavoritePacket(int id) {
             this.id = id;
         }
+    }
+
+    [Serializable]
+    public class Favorites
+    {
+        public User[] users;
     }
 
    

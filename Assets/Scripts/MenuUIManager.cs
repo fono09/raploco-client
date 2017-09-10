@@ -8,13 +8,30 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
     [SerializeField]
     private GameObject InsertTaskPanel;
 
+    [SerializeField]
+    private GameObject SearchUserPanel;
+
+    [SerializeField]
+    private GameObject FavoritePanel;
+
     [SerializeField] 
     private Button TaskImgButton;
 
     [SerializeField]
     private GameObject AddGenere;
 
+    [SerializeField]
+    private GameObject UserPanelPrefab;
+
+    [SerializeField]
+    private GameObject CreateFavoriteButton;
+
+    [SerializeField]
+    private GameObject BackButton;
+
     private List<Genre> genreList;
+
+    private List<User> users;
 
     private bool genreAddMode = true;
 
@@ -43,6 +60,7 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
     }
 
     public void Update() {
+        Debug.Log (Screen.orientation);
         if (Screen.orientation == ScreenOrientation.Landscape) {
             transitScene ();
         }
@@ -143,7 +161,88 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
         dropdown.AddOptions(options);
     }
 
+    public void ShowFavoritePanel() {
+        FavoritePanel.SetActive (true);
+        TaskImgButton.gameObject.SetActive (false);
+        CreateFavoriteButton.SetActive (false);
+        BackButton.SetActive (true);
+        StartCoroutine(HTTPManager.instance.GetData(HTTPManager.favoriteUrl,
+            (result) => {
+                users = new List<User>(JsonUtility.FromJson<HTTPManager.Favorites>(result).users);
+                adjustUsersToFavoriteView(users);
+            }));
+    }
+
+    public void BackToMenu() {
+        FavoritePanel.SetActive (false);
+        TaskImgButton.gameObject.SetActive (true);
+        CreateFavoriteButton.SetActive (true);
+        BackButton.SetActive (false);
+        FavoritePanel.transform.Find ("Input/InputField/Text").GetComponent<Text> ().text = "";
+    } 
+
+
+    public void CreateFavorite() {
+        string text = FavoritePanel.transform.Find ("Input/InputField/Text").GetComponent<Text> ().text;
+        FavoritePanel.transform.Find ("Input/InputField/Text").GetComponent<Text> ().text = "";
+        try {
+            int user_id = int.Parse(text);
+            HTTPManager.PostFavoritePacket obj = new HTTPManager.PostFavoritePacket(user_id);
+            StartCoroutine(postFavorite(obj));
+        } catch (UnityException e) {
+            //TODO Show Warn Invalid Input PopUp
+            Debug.Log (e);
+        }
+    }
+
+    public IEnumerator postFavorite(HTTPManager.PostFavoritePacket obj) {
+        yield return HTTPManager.instance.PostData (HTTPManager.favoriteUrl,
+            JsonUtility.ToJson (obj),
+            (result) => {
+                User u = JsonUtility.FromJson<User>(result);
+                if(!isAlreadyFavorite(u)) {
+                    users.Add(u);
+                } 
+                adjustUsersToFavoriteView(users);
+            });
+    }
+
+    private bool isAlreadyFavorite(User u) {
+        foreach (User i in users) {
+            if (u.id == i.id) {
+                return true;
+            }
+        }
+        return false;
+    } 
+              
     public void transitScene() {
         SceneManager.LoadScene ("Main");   
     }
+
+    private void adjustUsersToSearchView(List<User> users) {
+        Transform contentRoot = SearchUserPanel.transform.Find ("ScrollView/Viewport/Content");
+        foreach (User u in users) {
+            GameObject prefab = Instantiate (UserPanelPrefab, contentRoot);
+            setUserData (prefab, u);
+        }
+    }
+
+    private void adjustUsersToFavoriteView(List<User> users) {
+        Transform contentRoot = FavoritePanel.transform.Find ("ScrollView/Viewport/Content");
+        Debug.Log (users);
+        foreach ( Transform n in contentRoot.transform )
+        {
+            GameObject.Destroy(n.gameObject);
+        }
+        foreach (User u in users) {
+            GameObject prefab = Instantiate (UserPanelPrefab, contentRoot);
+            setUserData (prefab, u);
+        }
+    } 
+
+    private void setUserData(GameObject userPanelPrefab, User user) {
+        userPanelPrefab.transform.Find ("IdText").GetComponent<Text> ().text = string.Format("id: {0}", user.id);
+        userPanelPrefab.transform.Find ("NameText").GetComponent<Text> ().text = string.Format ("name: {0}", user.name);
+    } 
 }
