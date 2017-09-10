@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
 {
@@ -81,45 +82,34 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
         }
     }
 
-    [Serializable]
-    private class PostGenreCreatePacket 
-    {
-        public string name;
-        public PostGenreCreatePacket(string name) {
-            this.name = name;
-        }
-    }
    
     private IEnumerator onAwake ()
     {
-        UnityEngine.Debug.Log ("onAwake");
-        /* TEST CODE */
-        yield return GetData (testUrl,
-            (result) => {
-                TestResponse res = JsonUtility.FromJson<TestResponse> (result);
-                UnityEngine.Debug.LogFormat ("message: {0}", res.message);
-            }, true);
-
-        /* TEST CODE END*/
         this.uuid = getUUID ();
         if (this.uuid == null) {
-            //TODO 下のMockをLogin要求ダイアログにおきかえる
-            string name = "a3128113ab922a093fa15971cad743f9";
-            NameData post = new NameData (name);
-            string body = JsonUtility.ToJson (post);
-            yield return PostData (userUrl, body,
-                (result) => {
-                    Debug.Log(result);
-                    UserData res = JsonUtility.FromJson<UserData> (result);
-                    this.uuid = res.token;
-                    SaveUUID(this.uuid);
-                    this.headers.Add ("X-Token", this.uuid);
-                }, true);
+            if (Application.loadedLevelName == "Start") {
+                while (this.uuid == null) {
+                    yield return null;
+                }
+            } else {
+                SceneManager.LoadScene ("Start");
+            }
         } else {
             this.headers.Add("X-Token", this.uuid);
         }
 
         initializedFlag = true;
+    }
+
+    public IEnumerator RegisterUser(string name) {
+        NameData post = new NameData (name);
+        yield return PostData (userUrl,JsonUtility.ToJson(post),
+            (result) => {
+                UserData res = JsonUtility.FromJson<UserData> (result);
+                this.uuid = res.token;
+                SaveUUID(this.uuid);
+                this.headers.Add ("X-Token", this.uuid);
+            }, true);
     }
 
     private IEnumerator PostTask(string name, int cost, DateTime time, HttpHandler handler) {
@@ -206,7 +196,9 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
         yield return null;
     }
 
-
+    public bool UuidIsNull() {
+        return this.uuid == null;
+    }
 
     public bool IsInitialized ()
     {
