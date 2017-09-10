@@ -34,6 +34,11 @@ public class PostTaskObj {
         this.cost = cost;
         this.deadline = deadline;
     }
+    public PostTaskObj (string name, int cost, DateTime date) {
+        this.name = name;
+        this.cost = cost;
+        this.deadline = date.ToString("o");
+    }
 }
 
 [Serializable]
@@ -43,10 +48,11 @@ public class PutTaskObj {
     public int cost;
     public string deadline;
     public int user_id;
-    public PutTaskObj (int id, string name, int cost, string deadline, int userid) {
+    public PutTaskObj (int id, string name, int cost, string deadline, int user_id) {
+        this.id = id;
         this.name = name;
         this.cost = cost;
         this.deadline = deadline;
-        this.user_id = userid;
+        this.user_id = this.user_id;
     }
 }

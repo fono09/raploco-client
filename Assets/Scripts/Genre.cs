@@ -18,3 +18,13 @@ public class Genres
 {
     public Genre[] genres;
 }
+
+
+[Serializable]
+public class PostGenreCreatePacket 
+{
+    public string name;
+    public PostGenreCreatePacket(string name) {
+        this.name = name;
+    }
+}

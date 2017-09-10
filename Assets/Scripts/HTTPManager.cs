@@ -16,7 +16,7 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
     private static readonly string userUrl = "users";
     public static readonly string taskUrl = "tasks";
     private static readonly string favoriteUrl = "users/favorites";
-    private static readonly string genreUrl = "genres";
+    public static readonly string genreUrl = "genres";
 
     private string uuid;
 
@@ -133,7 +133,7 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
     }
 
     public IEnumerator UpdateTask(int id, string name, int cost, DateTime time, int user_id, HttpHandler handler) {
-        PutTaskObj obj = new PutTaskObj (id, name, cost, time.ToString("o"), user_id);
+        PutTaskObj obj = new PutTaskObj (id, name, cost, time.ToString ("o"), user_id);
         string body = JsonUtility.ToJson (obj);
         UnityWebRequest request = UnityWebRequest.Put (baseUrl + taskUrl + "/" + id.ToString(), body);
         request.SetRequestHeader ("X-Token", this.uuid);
