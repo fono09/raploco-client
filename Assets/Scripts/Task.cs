@@ -13,6 +13,8 @@ public class Task {
         }
     }
 
+    public DateTime DateTime { get; internal set; }
+
     public Task (int id, string name, int cost, string deadline) {
         this.id = id;
         this.name = name;
