@@ -36,17 +36,19 @@ public class MainController : MonoBehaviour {
         now_time = System.DateTime.Now;
 
         int s = 0;
-        foreach(Task n in tasks)
-        {   
-            s += 1;
+		yield return HTTPManager.instance.GetGenreList((result) => {
+			foreach(Task n in tasks)
+			{   
+				s += 1;
 
-            TimeSpan kk = n.DeadlineTime - now_time;
-            GameObject new_fish = Instantiate(target, GetPositionOnSphere(n.id*0.1f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
-            new_fish.GetComponent<TaskHolder> ().task = n;
-            GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
-            new_fish_text.GetComponent<TextMesh>().text = n.name;
-            //fishList.Add(new_fish);
-        }
+				TimeSpan kk = n.DeadlineTime - now_time;
+				GameObject new_fish = Instantiate(target, GetPositionOnSphere((2.0f / result.Count)*n.genre_id - 1.0f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
+				new_fish.GetComponent<TaskHolder> ().task = n;
+				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
+				new_fish_text.GetComponent<TextMesh>().text = n.name;
+				//fishList.Add(new_fish);
+			}
+		});
     } 
 	
 	// Update is called once per frame
@@ -63,7 +65,7 @@ public class MainController : MonoBehaviour {
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
 		
 		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
-			SceneManager.LoadScene ("Menu");
+			//SceneManager.LoadScene ("Menu");
 		}
 	}
 
