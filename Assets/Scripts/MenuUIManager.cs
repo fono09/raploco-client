@@ -81,7 +81,9 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
         PostTaskObj task = new PostTaskObj(
             InsertTaskPanel.transform.Find ("HorizontalLayout/TaskName/InputField/Text").GetComponent<Text>().text,
             (int)InsertTaskPanel.transform.Find("HorizontalLayout/Cost/Slider").GetComponent<Slider>().value * 100,
-            InsertTaskPanel.transform.Find("HorizontalLayout/Deadline/InputField/Text").GetComponent<Text>().text);
+            InsertTaskPanel.transform.Find("HorizontalLayout/Deadline/InputField/Text").GetComponent<Text>().text,
+            InsertTaskPanel.transform.Find("HorizontalLayout/Genre/Dropdown").GetComponent<Dropdown>().value
+        );
         StartCoroutine (postTask (task));
     }
 
