@@ -105,9 +105,13 @@ public class MainController : MonoBehaviour {
         List<int> usedList = new List<int> ();
         for (int i = 0; i < 3; i++) { 
             while (true) {
-                int rand = random.Next (favorites.Count);
+                Debug.Log (favorites.Count);
+                if (favorites.Count == 0) {
+                    break;
+                }
+                int rand = random.Next (favorites.Count - 1);
                 if (!usedList.Contains (rand)) {
-                    Teaddybears[i].GetComponent<UserHolder> ().user = favorites[rand];
+                    Teaddybears [i].GetComponent<UserHolder> ().user = favorites [rand];
                     usedList.Add (rand);
                     break;
                 }
