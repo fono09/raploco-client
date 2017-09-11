@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuConrtoller : MonoBehaviour {
+public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
 
 	public GameObject Light;
 	public GameObject TimeLabel;
@@ -49,6 +49,16 @@ public class MenuConrtoller : MonoBehaviour {
             new_fish_text.GetComponent<TextMesh>().text = n.name;
             //fishList.Add(new_fish);
         }
+    }
+
+    public void CreateNewFish(Task n) {
+        TimeSpan kk = n.DeadlineTime - now_time;
+        Debug.Log(kk.TotalSeconds);
+
+        GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+        GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
+        Debug.Log(new_fish_text);
+        new_fish_text.GetComponent<TextMesh>().text = n.name;
     }
 
 	

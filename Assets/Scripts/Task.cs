@@ -8,6 +8,7 @@ public class Task {
     public string name;
     public int cost;
     public string deadline;
+    public int genre;
     public DateTime DeadlineTime {
         get {
             return Convert.ToDateTime (deadline);
@@ -29,6 +30,7 @@ public class PostTaskObj {
     public string name;
     public int cost;
     public string deadline;
+    public int genre;
     public PostTaskObj (string name, int cost, string deadline) {
         this.name = name;
         this.cost = cost;
@@ -48,6 +50,7 @@ public class PutTaskObj {
     public int cost;
     public string deadline;
     public int user_id;
+    public int genre;
     public PutTaskObj (int id, string name, int cost, string deadline, int user_id) {
         this.id = id;
         this.name = name;

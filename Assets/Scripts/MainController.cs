@@ -24,28 +24,29 @@ public class MainController : MonoBehaviour {
 	private int datetimeStrS,datetimeStrM;
 
 	void Start () {
-		for (int i = 1; i <= 10; i++) {
-			int dd = i + 10;
-			tasks.Add( new Task(i, ((char)((int)'A' + i)).ToString(), i*10, String.Format("2017-09-{0:D2} 20:34:16 +0900", dd)));
-		}
-
-		now_time = System.DateTime.Now;
-		
-		int s = 0;
-		foreach(Task n in tasks)
-		{	
-			s += 1;
-
-			TimeSpan kk = n.DeadlineTime - now_time;
-			GameObject new_fish = Instantiate(target, GetPositionOnSphere(n.id*0.1f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
-			GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
-			new_fish_text.GetComponent<TextMesh>().text = n.name;
-			
-			GameObject new_dead_text = new_fish.transform.Find("DeadTime").gameObject;
-			new_dead_text.GetComponent<TextMesh>().text = n.deadline;
-			//fishList.Add(new_fish);
-		}
+        StartCoroutine (applyTaskDatas());
 	}
+
+    private IEnumerator applyTaskDatas() {
+        yield return HTTPManager.instance.GetTasks ((result) => {
+            Debug.Log (result);
+            tasks = new List<Task> (JsonUtility.FromJson<HTTPManager.TaskListPacket> (result).tasks);
+        });
+
+        now_time = System.DateTime.Now;
+
+        int s = 0;
+        foreach(Task n in tasks)
+        {   
+            s += 1;
+
+            TimeSpan kk = n.DeadlineTime - now_time;
+            GameObject new_fish = Instantiate(target, GetPositionOnSphere(n.id*0.1f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
+            GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
+            new_fish_text.GetComponent<TextMesh>().text = n.name;
+            //fishList.Add(new_fish);
+        }
+    } 
 	
 	// Update is called once per frame
 	void Update () {
@@ -59,9 +60,9 @@ public class MainController : MonoBehaviour {
 		datetimeStrS = System.DateTime.Now.Second;
 		datetimeStr = System.DateTime.Now.ToString();
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
-	
+		
 		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
-			//SceneManager.LoadScene ("Menu");
+			SceneManager.LoadScene ("Menu");
 		}
 	}
 
