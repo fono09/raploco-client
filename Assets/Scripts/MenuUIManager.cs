@@ -60,7 +60,7 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
     }
 
     public void Update() {
-        Debug.Log (Screen.orientation);
+        //Debug.Log (Screen.orientation);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight) {
             transitScene ();
         }
