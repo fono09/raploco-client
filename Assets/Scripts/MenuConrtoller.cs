@@ -41,7 +41,7 @@ public class MenuConrtoller : MonoBehaviour {
             s += 1;
 
             TimeSpan kk = n.DeadlineTime - now_time;
-            Debug.Log(kk.TotalSeconds);
+            //Debug.Log(kk.TotalSeconds);
 
             GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
             GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
