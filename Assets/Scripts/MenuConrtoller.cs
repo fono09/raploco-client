@@ -34,21 +34,24 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
             tasks = new List<Task>(JsonUtility.FromJson<HTTPManager.TaskListPacket>(result).tasks);
         });
 
-       
-        int s = 0;
-        foreach(Task n in tasks)
-        {   
-            s += 1;
+		yield return HTTPManager.instance.GetGenreList((result) => {
+			Debug.Log (result.Count);
+		
+			int s = 0;
+			foreach(Task n in tasks)
+			{   
+				s += 1;
 
-            TimeSpan kk = n.DeadlineTime - now_time;
-            //Debug.Log(kk.TotalSeconds);
+				TimeSpan kk = n.DeadlineTime - now_time;
 
-            GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
-            GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
-            Debug.Log(new_fish_text);
-            new_fish_text.GetComponent<TextMesh>().text = n.name;
-            //fishList.Add(new_fish);
-        }
+				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*n.genre_id - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
+                new_fish.GetComponent<TaskHolder> ().task = n;
+				//Debug.Log(new_fish_text);
+				new_fish_text.GetComponent<TextMesh>().text = n.name;
+				//fishList.Add(new_fish);
+			}
+		});
     }
 
     public void CreateNewFish(Task n) {
@@ -56,6 +59,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
         Debug.Log(kk.TotalSeconds);
 
         GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+        new_fish.GetComponent<TaskHolder> ().task = n;
         GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
         Debug.Log(new_fish_text);
         new_fish_text.GetComponent<TextMesh>().text = n.name;
