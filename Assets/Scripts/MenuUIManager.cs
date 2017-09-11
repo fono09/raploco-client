@@ -82,7 +82,17 @@ public class MenuUIManager : SingletonMonoBehaviour<MenuUIManager> {
             InsertTaskPanel.transform.Find ("HorizontalLayout/TaskName/InputField/Text").GetComponent<Text>().text,
             (int)InsertTaskPanel.transform.Find("HorizontalLayout/Cost/Slider").GetComponent<Slider>().value * 100,
             InsertTaskPanel.transform.Find("HorizontalLayout/Deadline/InputField/Text").GetComponent<Text>().text);
-        //TO BE IMPLEMENTED
+        StartCoroutine (postTask (task));
+    }
+
+    private IEnumerator postTask(PostTaskObj task) { 
+        yield return HTTPManager.instance.PostData (HTTPManager.taskUrl,
+            JsonUtility.ToJson (task),
+            ((result) => {
+                Task t = JsonUtility.FromJson<Task>(result);
+                MenuConrtoller.instance.CreateNewFish(t);
+            }));
+        hideTaskPanel ();
     }
 
     private void resetTaskPanelValue() {
