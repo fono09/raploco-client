@@ -57,7 +57,7 @@ public class MainController : MonoBehaviour {
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
 	
         if (Screen.orientation == ScreenOrientation.Portrait) {
-                SceneManager.LoadScene ("Menu");
+                //SceneManager.LoadScene ("Menu");
         }
     }
 
