@@ -9,7 +9,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
 	public GameObject Light;
 	public GameObject TimeLabel;
 
-	public GameObject target; 
+	public GameObject[] targets; 
 
 	private string datetimeStr,datetimeStrY,datetimeStrMo,datetimeStrD,datetimeStrH;
 	private int datetimeStrS,datetimeStrM;
@@ -43,7 +43,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
 				s += 1;
 
 				TimeSpan kk = n.DeadlineTime - now_time;
-
+                GameObject target = DetermineTarget(n.cost);
 				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*(n.genre_id - 1) - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
 				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
                 new_fish.GetComponent<TaskHolder> ().task = n;
@@ -54,12 +54,23 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
 		});
     }
 
+    private GameObject DetermineTarget(int cost) {
+        if (cost <= 30) {
+            return targets[0];
+        } else if (cost >= 70) {
+            return targets[2];
+        } else {
+            return targets[1];
+        }
+    }
+
     public void CreateNewFish(Task t) {
         StartCoroutine (CreateNewFishF(t));
     }
     public IEnumerator CreateNewFishF(Task t) {
 		yield return HTTPManager.instance.GetGenreList((result) => {
 				TimeSpan kk = t.DeadlineTime - now_time;
+                GameObject target = DetermineTarget(t.cost);
 				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*(t.genre_id-1) - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
 				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
                 new_fish.GetComponent<TaskHolder> ().task = t;

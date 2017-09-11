@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 114086549588739100}
   m_Layer: 0
   m_Name: 3DFishPoint
-  m_TagString: Untagged
+  m_TagString: fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1171,6 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj1: {fileID: 0}
+  reverse: 0
 --- !u!114 &114086549588739100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1187,7 +1188,7 @@ MonoBehaviour:
     name: 
     cost: 0
     deadline: 
-    genre: 0
+    genre_id: 0
 --- !u!137 &137360273307817998
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

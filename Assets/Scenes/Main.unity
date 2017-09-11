@@ -380,7 +380,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f064e43639e44798da7bbb1c165e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1475008688290058, guid: 5ec38b965914942aea2dbdd78433dae1, type: 2}
+  targets:
+  - {fileID: 1689004568781008, guid: bde6eb04592e540d5a8d5a4552bea4b9, type: 2}
+  - {fileID: 1475008688290058, guid: 5ec38b965914942aea2dbdd78433dae1, type: 2}
+  - {fileID: 1948543877220912, guid: b79bdbd07f8bb4528b981f61480d2662, type: 2}
   Teaddybears:
   - {fileID: 1290323074}
   - {fileID: 93289522}
@@ -860,6 +863,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   DeadLabel: {fileID: 0}
+  kuma: {fileID: 0}
+  throwTime: 2
 --- !u!1 &907215467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,7 +1484,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -928723174
+  randomSeed: 797961292
   InitialModule:
     serializedVersion: 3
     enabled: 1

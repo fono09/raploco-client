@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour {
 
 		if (Physics.Raycast(ray,out hit, Mathf.Infinity)){
             Debug.Log(hit.transform.name);
-            if (hit.transform.name == "3DFishPoint(Clone)") {
+            if (hit.transform.tag == "fish") {
                 hit.transform.Find ("TaskName").gameObject.SetActive (true);
                 hit.transform.Find ("DeadTime").gameObject.SetActive (true);
                 if (last_object == hit.transform.gameObject) {

@@ -551,7 +551,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Light: {fileID: 1582179243}
   TimeLabel: {fileID: 298157164}
-  target: {fileID: 1677419025593810, guid: a1a3335375beb4e0fbef082a5089629a, type: 2}
+  targets:
+  - {fileID: 1677419025593810, guid: a1a3335375beb4e0fbef082a5089629a, type: 2}
+  - {fileID: 1677419025593810, guid: a1a3335375beb4e0fbef082a5089629a, type: 2}
+  - {fileID: 1677419025593810, guid: a1a3335375beb4e0fbef082a5089629a, type: 2}
 --- !u!4 &481333517
 Transform:
   m_ObjectHideFlags: 0

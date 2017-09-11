@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 114128274459706374}
   m_Layer: 0
   m_Name: 2DFishPoint
-  m_TagString: Untagged
+  m_TagString: fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1031,7 +1031,7 @@ MonoBehaviour:
     name: 
     cost: 0
     deadline: 
-    genre: 0
+    genre_id: 0
 --- !u!114 &114468641062142782
 MonoBehaviour:
   m_ObjectHideFlags: 1

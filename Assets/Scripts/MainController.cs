@@ -11,7 +11,7 @@ public class MainController : MonoBehaviour {
 
 	private DateTime now_time;
 
-	public GameObject target; 
+	public GameObject[] targets; 
 
     [SerializeField]
     private GameObject[] Teaddybears;
@@ -46,6 +46,7 @@ public class MainController : MonoBehaviour {
 				s += 1;
 
 				TimeSpan kk = n.DeadlineTime - now_time;
+                GameObject target = DetermineTarget(n.cost);
 				GameObject new_fish = Instantiate(target, GetPositionOnSphere((2.0f / result.Count)*n.genre_id - 1.0f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
 				new_fish.GetComponent<TaskHolder> ().task = n;
 				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
@@ -55,7 +56,17 @@ public class MainController : MonoBehaviour {
 				//fishList.Add(new_fish);
 			}
 		});
-    } 
+    }
+
+    private GameObject DetermineTarget(int cost) {
+        if (cost <= 30) {
+            return targets[0];
+        } else if (cost >= 70) {
+            return targets[2];
+        } else {
+            return targets[1];
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
