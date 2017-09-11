@@ -28,6 +28,8 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
 
     public delegate void HttpHandler (string result);
 
+    public delegate void GenreHandler (List<Genre> genreList);
+
     public delegate void ErrorHandler (Exception e);
 
     private event ErrorHandler OnError = (err) => {UnityEngine.Debug.Log(err);};
@@ -105,6 +107,17 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
         }
 
         initializedFlag = true;
+    }
+
+    public IEnumerator GetGenreList(GenreHandler handler) {
+        List<Genre> genreList = new List<Genre> ();
+        yield return HTTPManager.instance.GetData (
+            HTTPManager.genreUrl,
+            (result) => {
+                Genres gs = JsonUtility.FromJson<Genres> (result);
+                genreList = new List<Genre> (gs.genres);
+            });
+        handler (genreList);
     }
 
     public IEnumerator RegisterUser(string name) {
