@@ -35,7 +35,7 @@ public class PostTaskObj {
         this.name = name;
         this.cost = cost;
         this.deadline = deadline;
-        this.genre_id = genre_id
+        this.genre_id = genre_id;
     }
     public PostTaskObj (string name, int cost, DateTime date, int genre_id) {
         this.name = name;

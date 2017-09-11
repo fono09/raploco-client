@@ -131,18 +131,12 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
             }, true);
     }
 
-    private IEnumerator PostTask(string name, int cost, DateTime time, HttpHandler handler) {
-        PostTaskObj obj = new PostTaskObj (name, cost, time.ToString("o"));
-        string body = JsonUtility.ToJson (obj);
-        yield return PostData (taskUrl, body, handler);
-    }
-
     public IEnumerator GetTasks(HttpHandler handler) {
         yield return GetData (taskUrl, handler);
     }
 
-    public IEnumerator UpdateTask(int id, string name, int cost, DateTime time, int user_id, HttpHandler handler) {
-        PutTaskObj obj = new PutTaskObj (id, name, cost, time.ToString ("o"), user_id);
+    public IEnumerator UpdateTask(int id, string name, int cost, DateTime time, int user_id, int genre_id, HttpHandler handler) {
+        PutTaskObj obj = new PutTaskObj (id, name, cost, time.ToString ("o"), user_id, genre_id);
         string body = JsonUtility.ToJson (obj);
         UnityWebRequest request = UnityWebRequest.Put (baseUrl + taskUrl + "/" + id.ToString(), body);
         request.SetRequestHeader ("X-Token", this.uuid);
@@ -156,6 +150,18 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
             }
         }
     }
+
+    public IEnumerator DeleteTask(int id) {
+        UnityWebRequest request = UnityWebRequest.Delete (baseUrl + taskUrl + "/"+ id.ToString());
+        request.SetRequestHeader ("X-Token", this.uuid);
+        yield return request.Send ();
+        if (request.isNetworkError) {
+            Debug.Log(request.error);
+        } else {
+            Debug.Log (request.responseCode);
+        }
+    }
+
 
     public IEnumerator DeleteFavorite(int id) {
         UnityWebRequest request = UnityWebRequest.Delete (baseUrl + favoriteUrl + "/" + id.ToString ());
