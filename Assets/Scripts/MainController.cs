@@ -13,6 +13,9 @@ public class MainController : MonoBehaviour {
 
 	public GameObject target; 
 
+    [SerializeField]
+    private GameObject[] Teaddybears;
+
 	List<Task> tasks = new List<Task> ();
 	List<GameObject> fishList;
 
@@ -25,6 +28,7 @@ public class MainController : MonoBehaviour {
 
 	void Start () {
         StartCoroutine (applyTaskDatas());
+        StartCoroutine (setKuma ());
 	}
 
     private IEnumerator applyTaskDatas() {
@@ -65,10 +69,11 @@ public class MainController : MonoBehaviour {
 		datetimeStrS = System.DateTime.Now.Second;
 		datetimeStr = System.DateTime.Now.ToString();
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
-		
+		/*
 		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
 			SceneManager.LoadScene ("Menu");
 		}
+  */      
 	}
 
 	public Vector3 GetPositionOnSphere(float angle1, float angle2, float r)
@@ -78,4 +83,28 @@ public class MainController : MonoBehaviour {
 	        float z = r * Mathf.Cos(angle1);
 	        return new Vector3(x, y, z);
 	}
+
+    private IEnumerator setKuma() {
+        List<User> favorites = new List<User> ();
+        System.Random random = new System.Random();
+        yield return HTTPManager.instance.GetData (HTTPManager.favoriteUrl,
+            ((result) => {
+                favorites = new List<User>(JsonUtility.FromJson<HTTPManager.Favorites>(result).users);
+            }));
+        List<int> usedList = new List<int> ();
+        for (int i = 0; i < 3; i++) { 
+            while (true) {
+                int rand = random.Next (favorites.Count);
+                if (!usedList.Contains (rand)) {
+                    Teaddybears[i].GetComponent<UserHolder> ().user = favorites[rand];
+                    usedList.Add (rand);
+                    break;
+                }
+                if (favorites.Count <= i) {
+                    Teaddybears [i].SetActive (false);
+                    break;
+                }
+            }
+        }
+    }
 }
