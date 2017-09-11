@@ -276,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409819833425388}
   - component: {fileID: 95182213382459904}
+  - component: {fileID: 114128274459706374}
   m_Layer: 0
   m_Name: 2DFishPoint
   m_TagString: Untagged
@@ -1014,6 +1015,23 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &114128274459706374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1677419025593810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1dfe6170c9b45b2b65b91d1c157720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  task:
+    id: 0
+    name: 
+    cost: 0
+    deadline: 
+    genre: 0
 --- !u!114 &114468641062142782
 MonoBehaviour:
   m_ObjectHideFlags: 1

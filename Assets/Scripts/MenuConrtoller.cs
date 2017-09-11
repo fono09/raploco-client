@@ -44,6 +44,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
             //Debug.Log(kk.TotalSeconds);
 
             GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+            new_fish.GetComponent<TaskHolder> ().task = n;
             GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
             Debug.Log(new_fish_text);
             new_fish_text.GetComponent<TextMesh>().text = n.name;
@@ -56,6 +57,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
         Debug.Log(kk.TotalSeconds);
 
         GameObject new_fish = Instantiate(target, new Vector3 (0.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+        new_fish.GetComponent<TaskHolder> ().task = n;
         GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
         Debug.Log(new_fish_text);
         new_fish_text.GetComponent<TextMesh>().text = n.name;

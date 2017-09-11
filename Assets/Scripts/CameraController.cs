@@ -92,6 +92,7 @@ public class CameraController : MonoBehaviour {
              else if (hit.transform.name == "del"){
                 if(move_hand_status == 2){
                     move_hand_status = 0;
+                    StartCoroutine (HTTPManager.instance.DeleteTask (Now_hand_fish.GetComponent<TaskHolder> ().task.id));
                     Destroy(Now_hand_fish);
                 }
             }
@@ -119,7 +120,7 @@ public class CameraController : MonoBehaviour {
             Now_hand_fish.transform.Find("DeadTime").gameObject.SetActive(true);
             Now_hand_fish.transform.GetComponent<Collider>().enabled = false;
 
-
+            Debug.Log (Now_hand_fish.transform.Find ("DeadTime").gameObject.GetComponent<TextMesh> ().text);
             DateTime endtime = Convert.ToDateTime (Now_hand_fish.transform.Find("DeadTime").gameObject.GetComponent<TextMesh>().text); 
             DateTime now_time = System.DateTime.Now;
 			TimeSpan kk = endtime - now_time;

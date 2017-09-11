@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 4830035264174758}
   - component: {fileID: 95783128836163782}
   - component: {fileID: 65717951958669406}
+  - component: {fileID: 114086549588739100}
   m_Layer: 0
   m_Name: 3DFishPoint
   m_TagString: Untagged
@@ -1170,6 +1171,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj1: {fileID: 0}
+--- !u!114 &114086549588739100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475008688290058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1dfe6170c9b45b2b65b91d1c157720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  task:
+    id: 0
+    name: 
+    cost: 0
+    deadline: 
+    genre: 0
 --- !u!137 &137360273307817998
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
