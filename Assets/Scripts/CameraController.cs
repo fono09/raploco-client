@@ -125,7 +125,7 @@ public class CameraController : MonoBehaviour {
             DateTime now_time = System.DateTime.Now;
 			TimeSpan kk = endtime - now_time;
             DeadLabel = GameObject.Find("Nokori");
-            DeadLabel.GetComponent<Text>().text = string.Format("{0:c}", kk);
+            DeadLabel.GetComponent<Text>().text = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", kk.Days, kk.Hours, kk.Minutes, kk.Seconds);
 
             //Now_hand_fish.transform.rotation = Quaternion.Euler(10,10,10);
         }
