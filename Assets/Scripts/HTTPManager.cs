@@ -136,7 +136,7 @@ public class HTTPManager : SingletonMonoBehaviour<HTTPManager>
     }
 
     public IEnumerator UpdateTask(int id, string name, int cost, DateTime time, int user_id, int genre_id, HttpHandler handler) {
-        PutTaskObj obj = new PutTaskObj (id, name, cost, time.ToString ("o"), user_id, genre_id);
+        PutTaskObj obj = new PutTaskObj (id, name, cost, time.ToString("o"), user_id, genre_id);
         string body = JsonUtility.ToJson (obj);
         UnityWebRequest request = UnityWebRequest.Put (baseUrl + taskUrl + "/" + id.ToString(), body);
         request.SetRequestHeader ("X-Token", this.uuid);

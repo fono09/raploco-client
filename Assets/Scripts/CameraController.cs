@@ -108,7 +108,7 @@ public class CameraController : MonoBehaviour {
                     kuma = hit.transform.gameObject;
                     currentTime = 0.0f;
                     hit.transform.LookAt (kuma.transform.position);
-                    StartCoroutine (HTTPManager.instance.UpdateTask(t.id, t.name, t.cost, t.DateTime, u.id, t.genre_id, ((result) => {
+                    StartCoroutine (HTTPManager.instance.UpdateTask(t.id, t.name, t.cost, t.DeadlineTime, u.id, t.genre_id, ((result) => {
                         Debug.Log(result);
                     })));
                 }
