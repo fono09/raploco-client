@@ -13,6 +13,9 @@ public class MainController : MonoBehaviour {
 
 	public GameObject target; 
 
+    [SerializeField]
+    private GameObject[] Teaddybears;
+
 	List<Task> tasks = new List<Task> ();
 	List<GameObject> fishList;
 
@@ -25,6 +28,7 @@ public class MainController : MonoBehaviour {
 
 	void Start () {
         StartCoroutine (applyTaskDatas());
+        StartCoroutine (setKuma ());
 	}
 
     private IEnumerator applyTaskDatas() {
@@ -36,19 +40,17 @@ public class MainController : MonoBehaviour {
         now_time = System.DateTime.Now;
 
         int s = 0;
-		yield return HTTPManager.instance.GetGenreList((result) => {
-			foreach(Task n in tasks)
-			{   
-				s += 1;
+        foreach(Task n in tasks)
+        {   
+            s += 1;
 
-				TimeSpan kk = n.DeadlineTime - now_time;
-				GameObject new_fish = Instantiate(target, GetPositionOnSphere((2.0f / result.Count)*n.genre_id - 1.0f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
-				new_fish.GetComponent<TaskHolder> ().task = n;
-				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
-				new_fish_text.GetComponent<TextMesh>().text = n.name;
-				//fishList.Add(new_fish);
-			}
-		});
+            TimeSpan kk = n.DeadlineTime - now_time;
+            GameObject new_fish = Instantiate(target, GetPositionOnSphere(n.id*0.1f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
+            new_fish.GetComponent<TaskHolder> ().task = n;
+            GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
+            new_fish_text.GetComponent<TextMesh>().text = n.name;
+            //fishList.Add(new_fish);
+        }
     } 
 	
 	// Update is called once per frame
@@ -63,10 +65,11 @@ public class MainController : MonoBehaviour {
 		datetimeStrS = System.DateTime.Now.Second;
 		datetimeStr = System.DateTime.Now.ToString();
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
-		
+		/*
 		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
-			//SceneManager.LoadScene ("Menu");
+			SceneManager.LoadScene ("Menu");
 		}
+  */      
 	}
 
 	public Vector3 GetPositionOnSphere(float angle1, float angle2, float r)
@@ -76,4 +79,28 @@ public class MainController : MonoBehaviour {
 	        float z = r * Mathf.Cos(angle1);
 	        return new Vector3(x, y, z);
 	}
+
+    private IEnumerator setKuma() {
+        List<User> favorites = new List<User> ();
+        System.Random random = new System.Random();
+        yield return HTTPManager.instance.GetData (HTTPManager.favoriteUrl,
+            ((result) => {
+                favorites = new List<User>(JsonUtility.FromJson<HTTPManager.Favorites>(result).users);
+            }));
+        List<int> usedList = new List<int> ();
+        for (int i = 0; i < 3; i++) { 
+            while (true) {
+                int rand = random.Next (favorites.Count);
+                if (!usedList.Contains (rand)) {
+                    Teaddybears[i].GetComponent<UserHolder> ().user = favorites[rand];
+                    usedList.Add (rand);
+                    break;
+                }
+                if (favorites.Count <= i) {
+                    Teaddybears [i].SetActive (false);
+                    break;
+                }
+            }
+        }
+    }
 }
