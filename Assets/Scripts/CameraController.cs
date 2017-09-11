@@ -30,6 +30,10 @@ public class CameraController : MonoBehaviour {
     
 	public GameObject DeadLabel;
 
+    public GameObject kuma;
+    public float throwTime = 2.0f;
+    private float currentTime = 0.0f;
+
 
     void Start()
     {
@@ -57,47 +61,66 @@ public class CameraController : MonoBehaviour {
 
 		if (Physics.Raycast(ray,out hit, Mathf.Infinity)){
             Debug.Log(hit.transform.name);
-            if (hit.transform.name == "3DFishPoint(Clone)"){
-                hit.transform.Find("TaskName").gameObject.SetActive(true);
-                hit.transform.Find("DeadTime").gameObject.SetActive(true);
-                if(last_object ==  hit.transform.gameObject){
-                    ShowTimeCount +=1; 
-                }else{
+            if (hit.transform.name == "3DFishPoint(Clone)") {
+                hit.transform.Find ("TaskName").gameObject.SetActive (true);
+                hit.transform.Find ("DeadTime").gameObject.SetActive (true);
+                if (last_object == hit.transform.gameObject) {
+                    ShowTimeCount += 1; 
+                } else {
                     ShowTimeCount = 0;
                 }
 
-                if(ShowTimeCount > 50 && move_hand_status == 0){
+                if (ShowTimeCount > 50 && move_hand_status == 0) {
                     move_hand_status = 1;
                     First_Position = hit.transform.position;
                     First_Rotation = hit.transform.rotation;
                     Now_hand_fish = hit.transform.gameObject;
                     startTime = Time.time;
-                    journeyLength = Vector3.Distance(hit.transform.position,this.transform.position);
-                }else{
-                    if(move_hand_status == 0){
-                        hit.transform.position = new Vector3 (hit.transform.position.x + (Mathf.Sin(ShowTimeCount)* 0.05f),hit.transform.position.y,hit.transform.position.z);
+                    journeyLength = Vector3.Distance (hit.transform.position, this.transform.position);
+                } else {
+                    if (move_hand_status == 0) {
+                        hit.transform.position = new Vector3 (hit.transform.position.x + (Mathf.Sin (ShowTimeCount) * 0.05f), hit.transform.position.y, hit.transform.position.z);
                     }
                 }
                 last_object = hit.transform.gameObject;
-            }
-            else if (hit.transform.name == "back"){
-                if(move_hand_status == 2){
+            } else if (hit.transform.name == "back") {
+                if (move_hand_status == 2) {
                     move_hand_status = 0;
                     Now_hand_fish.transform.parent = null;
                     Now_hand_fish.transform.position = First_Position;
                     Now_hand_fish.transform.rotation = First_Rotation;
-                    Now_hand_fish.transform.GetComponent<Collider>().enabled = true;
+                    Now_hand_fish.transform.GetComponent<Collider> ().enabled = true;
                 }
-            }
-             else if (hit.transform.name == "del"){
-                if(move_hand_status == 2){
+            } else if (hit.transform.name == "del") {
+                if (move_hand_status == 2) {
                     move_hand_status = 0;
                     StartCoroutine (HTTPManager.instance.DeleteTask (Now_hand_fish.GetComponent<TaskHolder> ().task.id));
-                    Destroy(Now_hand_fish);
+                    Destroy (Now_hand_fish);
+                }
+            } else if (hit.transform.tag == "kuma") {
+                if (move_hand_status == 2) {
+                    move_hand_status = 3;
+                    Task t = Now_hand_fish.GetComponent<TaskHolder> ().task;
+                    User u = hit.transform.GetComponent<UserHolder> ().user;
+                    kuma = hit.transform.gameObject;
+                    currentTime = 0.0f;
+                    hit.transform.LookAt (kuma.transform.position);
+                    StartCoroutine (HTTPManager.instance.UpdateTask(t.id, t.name, t.cost, t.DateTime, u.id, t.genre_id, ((result) => {
+                        Debug.Log(result);
+                    })));
                 }
             }
         }
 
+        if (move_hand_status == 3) {
+            if (currentTime > throwTime) {
+                move_hand_status = 0;
+                currentTime = 0;
+                Destroy (Now_hand_fish);
+            }
+            Now_hand_fish.transform.position = Vector3.Lerp (Camera.main.transform.position, kuma.transform.position, currentTime / throwTime);
+            currentTime += Time.deltaTime;
+        } 
 
 
         if (move_hand_status == 1){
