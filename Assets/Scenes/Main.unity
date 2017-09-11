@@ -861,6 +861,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e16fcab5a039d492982b550f34fdbabf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sushi_object: {fileID: 1188390513293858, guid: b0fe31f8a8b7148d5b8abd2b596ae21d,
+    type: 2}
   speed: 1
   DeadLabel: {fileID: 0}
   kuma: {fileID: 0}
