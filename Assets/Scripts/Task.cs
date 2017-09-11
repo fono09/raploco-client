@@ -58,7 +58,7 @@ public class PutTaskObj {
         this.name = name;
         this.cost = cost;
         this.deadline = deadline;
-        this.user_id = this.user_id;
-        this.genre_id = this.genre_id;
+        this.user_id = user_id;
+        this.genre_id = genre_id;
     }
 }
