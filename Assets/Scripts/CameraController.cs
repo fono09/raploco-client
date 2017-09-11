@@ -49,10 +49,16 @@ public class CameraController : MonoBehaviour {
         if (tn != null){
             tn.SetActive(false);
         }
+        GameObject dt = GameObject.Find("DeadTime");
+        if (dt != null){
+            dt.SetActive(false);
+        }
+
 		if (Physics.Raycast(ray,out hit, Mathf.Infinity)){
             Debug.Log(hit.transform.name);
             if (hit.transform.name == "3DFishPoint(Clone)"){
                 hit.transform.Find("TaskName").gameObject.SetActive(true);
+                hit.transform.Find("DeadTime").gameObject.SetActive(true);
                 if(last_object ==  hit.transform.gameObject){
                     ShowTimeCount +=1; 
                 }else{
@@ -109,6 +115,7 @@ public class CameraController : MonoBehaviour {
             Now_hand_fish.transform.parent = this.transform;
             //Now_hand_fish.transform.position = new Vector3(-3,0,0);
             Now_hand_fish.transform.Find("TaskName").gameObject.SetActive(true);
+            Now_hand_fish.transform.Find("DeadTime").gameObject.SetActive(true);
             Now_hand_fish.transform.GetComponent<Collider>().enabled = false;
             //Now_hand_fish.transform.rotation = Quaternion.Euler(10,10,10);
         }

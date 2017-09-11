@@ -39,6 +39,9 @@ public class MainController : MonoBehaviour {
 			GameObject new_fish = Instantiate(target, GetPositionOnSphere(n.id*0.1f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
 			GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
 			new_fish_text.GetComponent<TextMesh>().text = n.name;
+			
+			GameObject new_dead_text = new_fish.transform.Find("DeadTime").gameObject;
+			new_dead_text.GetComponent<TextMesh>().text = n.deadline;
 			//fishList.Add(new_fish);
 		}
 	}
@@ -56,9 +59,10 @@ public class MainController : MonoBehaviour {
 		datetimeStr = System.DateTime.Now.ToString();
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
 	
-    if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
-         SceneManager.LoadScene ("Menu");
-    }
+		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
+			//SceneManager.LoadScene ("Menu");
+		}
+	}
 
 	public Vector3 GetPositionOnSphere(float angle1, float angle2, float r)
 	{
