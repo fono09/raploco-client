@@ -14,10 +14,6 @@ public class CameraController : MonoBehaviour {
 
 
 
-
-
-
-
     public float speed = 0.001F;
     private float startTime;
     private float journeyLength;
@@ -27,7 +23,8 @@ public class CameraController : MonoBehaviour {
     GameObject Now_hand_fish;
     
     Vector3 First_Position;
-    
+    Quaternion First_Rotation;
+
     int move_hand_status;
     
 
@@ -65,6 +62,7 @@ public class CameraController : MonoBehaviour {
                 if(ShowTimeCount > 50 && move_hand_status == 0){
                     move_hand_status = 1;
                     First_Position = hit.transform.position;
+                    First_Rotation = hit.transform.rotation;
                     Now_hand_fish = hit.transform.gameObject;
                     startTime = Time.time;
                     journeyLength = Vector3.Distance(hit.transform.position,this.transform.position);
@@ -80,6 +78,7 @@ public class CameraController : MonoBehaviour {
                     move_hand_status = 0;
                     Now_hand_fish.transform.parent = null;
                     Now_hand_fish.transform.position = First_Position;
+                    Now_hand_fish.transform.rotation = First_Rotation;
                     Now_hand_fish.transform.GetComponent<Collider>().enabled = true;
                 }
             }
@@ -119,8 +118,8 @@ public class CameraController : MonoBehaviour {
         if (Input.gyro.enabled)
         {
             gyro = Input.gyro.attitude;
-            gyro = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x,-gyro.y +start_gyro.y, gyro.z - start_gyro.z, gyro.w));
-            //this.transform.localRotation = gyro;
+            gyro = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x,-gyro.y, gyro.z, gyro.w));
+            this.transform.localRotation = gyro;
             //最初に見ていた向きとゲームの進行方向を合わせる
             //this.transform.localRotation = Quaternion.Euler(0, -start_gyro.y, 0);
         }
