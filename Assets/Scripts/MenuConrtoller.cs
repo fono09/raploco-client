@@ -44,7 +44,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
 
 				TimeSpan kk = n.DeadlineTime - now_time;
 
-				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*n.genre_id - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*(n.genre_id - 1) - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
 				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
                 new_fish.GetComponent<TaskHolder> ().task = n;
 				//Debug.Log(new_fish_text);
@@ -60,7 +60,7 @@ public class MenuConrtoller : SingletonMonoBehaviour<MenuConrtoller> {
     public IEnumerator CreateNewFishF(Task t) {
 		yield return HTTPManager.instance.GetGenreList((result) => {
 				TimeSpan kk = t.DeadlineTime - now_time;
-				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*t.genre_id - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
+				GameObject new_fish = Instantiate(target, new Vector3 ((2.0f / result.Count)*(t.genre_id-1) - 1.0f, 0.00001f*((float)kk.TotalSeconds), -1.0f), Quaternion.Euler(0, 0, 0));
 				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
                 new_fish.GetComponent<TaskHolder> ().task = t;
 				//Debug.Log(new_fish_text);

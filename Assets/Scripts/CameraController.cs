@@ -136,7 +136,7 @@ public class CameraController : MonoBehaviour {
         {
             gyro = Input.gyro.attitude;
             gyro = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x,-gyro.y, gyro.z, gyro.w));
-            //this.transform.localRotation = gyro;
+            this.transform.localRotation = gyro;
             //最初に見ていた向きとゲームの進行方向を合わせる
             //this.transform.localRotation = Quaternion.Euler(0, -start_gyro.y, 0);
         }
