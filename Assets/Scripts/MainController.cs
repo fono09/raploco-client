@@ -46,7 +46,7 @@ public class MainController : MonoBehaviour {
 				s += 1;
 
 				TimeSpan kk = n.DeadlineTime - now_time;
-				GameObject new_fish = Instantiate(target, GetPositionOnSphere((2.0f / result.Count)*n.genre_id - 1.0f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(0, 0, 0));
+				GameObject new_fish = Instantiate(target, GetPositionOnSphere((2.0f / result.Count)*n.genre_id - 1.0f,0.0f,0.00005f*((float)kk.TotalSeconds)), Quaternion.Euler(1, 1, 1));
 				new_fish.GetComponent<TaskHolder> ().task = n;
 				GameObject new_fish_text = new_fish.transform.Find("TaskName").gameObject;
 				new_fish_text.GetComponent<TextMesh>().text = n.name;

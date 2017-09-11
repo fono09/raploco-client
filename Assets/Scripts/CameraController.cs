@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour {
     Quaternion gyro;
 
     GameObject last_object;
+    public  GameObject sushi_object;
 
     int ShowTimeCount;
 
@@ -96,6 +97,8 @@ public class CameraController : MonoBehaviour {
                     move_hand_status = 0;
                     StartCoroutine (HTTPManager.instance.DeleteTask (Now_hand_fish.GetComponent<TaskHolder> ().task.id));
                     Destroy (Now_hand_fish);
+                    Instantiate(sushi_object, new Vector3 (0,0,-3), Quaternion.Euler(2,3, 4));
+
                 }
             } else if (hit.transform.tag == "kuma") {
                 if (move_hand_status == 2) {
@@ -159,7 +162,7 @@ public class CameraController : MonoBehaviour {
         {
             gyro = Input.gyro.attitude;
             gyro = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x,-gyro.y, gyro.z, gyro.w));
-            this.transform.localRotation = gyro;
+            //this.transform.localRotation = gyro;
             //最初に見ていた向きとゲームの進行方向を合わせる
             //this.transform.localRotation = Quaternion.Euler(0, -start_gyro.y, 0);
         }
