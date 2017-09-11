@@ -17,6 +17,7 @@ public class MainController : MonoBehaviour {
 	List<GameObject> fishList;
 
 
+
 	public GameObject TimeLabel; 
 
 	private string datetimeStr,datetimeStrY,datetimeStrMo,datetimeStrD,datetimeStrH;
@@ -60,7 +61,7 @@ public class MainController : MonoBehaviour {
 		TimeLabel.GetComponent<Text>().text = datetimeStrY+"/"+datetimeStrMo+"/"+datetimeStrD+"\n"+datetimeStrH+":"+String.Format("{0:D2}", datetimeStrM)+":"+String.Format("{0:D2}", datetimeStrS);
 	
 		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown) {
-			//SceneManager.LoadScene ("Menu");
+			SceneManager.LoadScene ("Menu");
 		}
 	}
 

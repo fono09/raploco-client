@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour {
 
     int move_hand_status;
     
-
+	public GameObject DeadLabel;
 
 
     void Start()
@@ -123,7 +123,8 @@ public class CameraController : MonoBehaviour {
             DateTime endtime = Convert.ToDateTime (Now_hand_fish.transform.Find("DeadTime").GetComponent<Text>().text); 
             DateTime now_time = System.DateTime.Now;
 			TimeSpan kk = endtime - now_time;
-            Now_hand_fish.transform.Find("DeadTime").GetComponent<Text>().text = "" + kk.TotalSeconds;
+            DeadLabel = GameObject.Find("Nokori");
+            DeadLabel.GetComponent<Text>().text = "" + kk.TotalSeconds;
 
             //Now_hand_fish.transform.rotation = Quaternion.Euler(10,10,10);
         }
