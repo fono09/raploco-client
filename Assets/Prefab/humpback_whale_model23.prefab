@@ -417,6 +417,7 @@ GameObject:
   - component: {fileID: 111584753117036174}
   - component: {fileID: 114494986525410050}
   - component: {fileID: 114230477761060010}
+  - component: {fileID: 65720219166310296}
   m_Layer: 0
   m_Name: humpback_whale_model23
   m_TagString: fish
@@ -894,6 +895,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &65720219166310296
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1948543877220912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6119034, y: 1.1642876, z: 2.3536625}
+  m_Center: {x: -0.30595183, y: 0.08214378, z: -0.67683125}
 --- !u!102 &102127296870416908
 TextMesh:
   serializedVersion: 3

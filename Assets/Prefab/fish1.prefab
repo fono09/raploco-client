@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 95912568150088594}
   - component: {fileID: 114927975629562052}
   - component: {fileID: 114972649008301134}
+  - component: {fileID: 65608753266904842}
   m_Layer: 0
   m_Name: fish1
   m_TagString: fish
@@ -807,6 +808,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &65608753266904842
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689004568781008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.55636203, y: 0.56233025, z: 0.62432337}
+  m_Center: {x: 0.22181898, y: -0.21883488, z: 0.18783832}
 --- !u!95 &95912568150088594
 Animator:
   serializedVersion: 3
